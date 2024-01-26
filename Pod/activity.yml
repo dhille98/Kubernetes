@@ -1,0 +1,11 @@
+apivesion: v1
+
+kind: Pod
+metadata:
+  name: alpine
+  
+spec:
+  containers:
+  - name: test-1
+    image: alpine
+    
