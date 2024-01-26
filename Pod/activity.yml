@@ -1,4 +1,4 @@
-apivesion: v1
+apiversion: v1
 
 kind: Pod
 metadata:
