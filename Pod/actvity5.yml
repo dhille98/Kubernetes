@@ -10,7 +10,27 @@ spec:
       args: 
         - sleep
         - 10s
+ 
+    - name: alpine1
+      image: alpine
+      args: 
+        - sleep
+        - 10s
+    - name: alpine2
+      image: alpine
+      args: 
+        - sleep
+        - 10s
   containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+          protocol: TCP
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 0.5Gi
     - name: nginx
       image: nginx
       ports:
