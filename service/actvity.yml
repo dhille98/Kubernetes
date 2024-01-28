@@ -1,0 +1,53 @@
+---
+apiversion: apps/v1
+Kind: ReplicaSet
+metadata:
+  name: spring
+  labels:
+    app: spc-rs
+    
+    
+spec:
+  minReadySeconds: 10
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spc
+      env: dev
+      version: v3.4.0
+  template:
+    metadata:
+      name: spc-container
+      labels:
+        app: sprc
+    spec:
+      - restartPolicy: Always
+      - containers:
+          name: spc
+          image: shaikkhajaibrahim/spcjan2024:1.0
+          ports:
+            containerPort: 8080
+            protocol: TCP 
+        resources: 
+          limits:
+            cpu: 1000m
+            memory: 0.5Gi
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sprc-svc
+  labels: 
+    app: spc
+spec:
+  selector:
+    app: spc
+  ports:
+  - port: 8080
+    targetPort: 8080
+
+
+
+        
