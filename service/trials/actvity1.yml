@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: httpd-rs
+  name: httpd-rs1
   labels:
     app: httpd-rs
     
@@ -20,12 +20,12 @@ spec:
         app: httpd-1
     spec: 
       - containers:
-          
+          name: httpd
           image: httpd
           ports:
             containerPort: 80
-            porotocol: TCP
-        resources:
-          limits:
-            cpu: 1000m
-            memory: 0.5Gi
+            
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 0.5Gi
