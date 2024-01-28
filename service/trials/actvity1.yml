@@ -1,31 +1,29 @@
----
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-  name: httpd-rs1
+  name: httpd-rsc
   labels:
     app: httpd-rs
-    
+
 spec:
   minReadySeconds: 5
   replicas: 3
-  selector: 
-    matchLabels: 
+  selector:
+    matchLabels:
       app: httpd
       version: v1.0
   template:
     metadata:
-      
+
       labels:
         app: httpd-1
-    spec: 
-      - containers:
-          name: httpd
+    spec:
+      containers:
+        - name: httpd
           image: httpd
           ports:
-            containerPort: 80
-            
-          resources:
-            limits:
-              cpu: 1000m
-              memory: 0.5Gi
+            - containerPort: 80
+      resources:
+          - limits:
+            cpu: 1000m
+            memory: 0.5Gi
