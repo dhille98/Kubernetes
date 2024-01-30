@@ -1,0 +1,38 @@
+--- 
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+  name: ngnix-rs
+  labels:
+    app: ngnix-rs
+
+spec:
+  minReadySeconds: 5
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ngnix
+  template:
+    metadata:
+      labels:
+        app: ngnix
+    spec:
+      containers:
+        - name: ngnix
+          image: nginx
+          ports:
+            - containerPort: 80
+
+--- 
+apiVersion: v1
+kind: Service
+metadata: 
+  name: ngnix-svc
+
+spec:
+  selector: 
+    app: ngnix
+  ports:
+    - name: nginx-port
+      port: 80
+      targetPort: 80

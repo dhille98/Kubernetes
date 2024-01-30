@@ -1,0 +1,38 @@
+apiversion: apps/v1
+Kind: Deployment
+metadata: 
+  name: trial1-depoly
+spec:
+  minReadySeconds: 30
+  replicas: 10
+  selector:
+    matchLabels: 
+      app: jenkins
+  strategy:
+    rollingUpdate:
+      maxSurge: 40%
+      maxUnavailable: 40%
+    type: RollingUpdate
+  template:
+    metadata:
+      name: trail-rs
+      labels:
+        app: jenkins
+    spec:
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:jdk-11
+          resources:
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          ports: 
+            - containerPort: 8080
+
+---
+apiversion: v1
+Kind: service
+metadata:
+  selector:
+    app: jenkins
+spec:
