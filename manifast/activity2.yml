@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: actvity-2
+spec:
+  schedule: "* * * * *"
+  jobTemplate: 
+    metadata: 
+      name: cronjob-temp
+    spec: 
+      template: 
+        metadata: 
+          name: alpine-cornjob 
+        spec: 
+          restartPolicy: Never
+          containers: 
+            - name: alpine
+              image: alpine
+              args: 
+                - sleep
+                - 30s
+      
