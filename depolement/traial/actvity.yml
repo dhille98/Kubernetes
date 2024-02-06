@@ -1,5 +1,5 @@
-apiversion: apps/v1
-Kind: Deployment
+apiVersion: apps/v1
+kind: Deployment
 metadata: 
   name: trial1-depoly
 spec:
@@ -21,18 +21,26 @@ spec:
     spec:
       containers:
         - name: jenkins
-          image: jenkins/jenkins:jdk-11
+          image: tomcat:jdk17
           resources:
             limits:
-              cpu: 2000m
-              memory: 2Gi
+              cpu: 200m
+              memory: 0.5Gi
           ports: 
             - containerPort: 8080
 
 ---
-apiversion: v1
-Kind: service
-metadata:
+apiVersion: v1
+kind: Service
+metadata: 
+  name: web-svc
+  labels: 
+    app: web-svc
+spec: 
   selector:
     app: jenkins
-spec:
+  type: NodePort
+  ports: 
+    - port: 8080
+      targetPort: 8080
+      nodePort: 32000

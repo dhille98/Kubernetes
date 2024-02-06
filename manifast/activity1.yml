@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      containers:
+      - name: job-pod
+        image: alpine
+        args: 
+          - sleep
+          - 30s
+      restartPolicy: Never
+
