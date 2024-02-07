@@ -2,15 +2,40 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: job
+  labels:
+    app: job
 spec:
-  ttlSecondsAfterFinished: 60
+  ttlSecondsAfterFinished: 120
+  selector:
+    matchLabels:
+      app: nginx-job
   template:
+    metadata:
+      labels:
+        app: nginx-job
     spec:
       containers:
       - name: job-pod
-        image: alpine
-        args: 
-          - sleep
-          - 30s
+        image: nginx
+        ports:
+          - containerPort: 80
       restartPolicy: Never
+
+
+
+--- 
+apiVersion: v1
+kind: Service
+metadata: 
+  name: job-svc
+  labels: 
+    app: svc-job
+spec: 
+  selector:
+    app: nginx-job
+  type: NodePort
+  ports: 
+    - port: 80
+      targetPort: 80
+      nodePort: 32500
 
