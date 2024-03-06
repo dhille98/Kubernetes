@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-1
+spec:
+  minReadySeconds: 10
+  replicas: 4
+  selector: 
+    matchLabels:
+      app: httpd-prc
+  strategy:
+    type: RollingUpdate 
+    rollingUpdate: 
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: httpd-prc
+    spec:
+      containers:
+      - name: httpd-1
+        image: httpd
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        livenessProbe: 
+          httpGet: 
+            path: /
+            port: 80
+        readinessProbe: 
+          httpGet: 
+            path: /
+            port: 80
+        volumeMounts:
+          - mountPath: /mnt
+            name: httpd-volume 
+      volumes:
+        - name: httpd-volume
+          emptyDir:  
+           sizeLimit: 500Mi
+
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-svc
+spec:
+  selector:
+    app: httpd-prc
+  ports:
+  - port: 80
+    targetPort: 80
+
+         
+          

@@ -3,15 +3,15 @@ kind: Deployment
 metadata: 
   name: trial1-depoly
 spec:
-  minReadySeconds: 30
-  replicas: 10
+  minReadySeconds: 5
+  replicas: 4
   selector:
     matchLabels: 
       app: jenkins
   strategy:
     rollingUpdate:
-      maxSurge: 40%
-      maxUnavailable: 40%
+      maxSurge: 25%
+      maxUnavailable: 25%
     type: RollingUpdate
   template:
     metadata:

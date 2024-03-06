@@ -27,18 +27,11 @@ spec:
           image: tomcat:9-jdk11-corretto
           livenessProbe:
             httpGet:
-              port: 80
-              path: /
+              port: 8080
+              path: /healthz
           ports: 
             - containerPort: 8080
-          readinessProbe: 
-            httpGet:
-              port: 80
-              path: /
-          resources: 
-            limits: 
-              cpu: 500m
-              memory: 250Mi
+          
           
 ---
 apiVersion: v1

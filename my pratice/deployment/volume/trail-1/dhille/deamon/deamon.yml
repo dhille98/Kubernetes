@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: daemon
+  labels:
+    app: deamon-p
+spec:
+  selector:
+    matchLabels:
+      app: deamon-prc
+  template:
+    metadata:
+      labels:
+        app: deamon-prc
+    spec:
+      containers:
+      - name: alpine
+        image: alpine
+        args: 
+          - sleep
+          - 1d
+        command: ["sh", "-c", "mkdir -p /folder && touch /folder/test.txt && sleep 3600"]
+        volumeMounts:
+        - name: deamon-volume
+          mountPath: /folder
+      volumes:
+      - name: deamon-volume
+        hostPath:
+          path: /folder
+          type: DirectoryOrCreate

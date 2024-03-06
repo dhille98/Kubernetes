@@ -1,0 +1,54 @@
+apiversion: apps/v1
+kind: StatefulSet
+metadata: 
+  name: pistop-sft
+  labels: 
+    app: pistop-ra
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels:
+      app: pistop-rabbitmq 
+  serviceName: rabbitmq-pi
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template: 
+    metadata:
+      name: pod-pistop
+      labels: 
+        app: pistop-rabbitmq    
+    spec:
+      containers: 
+        - name: rabbitmq
+          image: rabbitmq:3-management-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts: 
+           - name: rabbitmq-vol
+             mountPath: /var/lib/mysql
+  volumes: 
+    - name: rabbitmq-vol
+      persistentVolumeClaim: 
+        claimName: emp
+        readOnly: false
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: rabbitmq-svc
+  labels: 
+    app: pistop-svc
+spec: 
+  selector:
+    app: pistop-rabbitmq
+  type: NodePort
+  ports: 
+    - port: 80
+      targetPort: 80
+      nodePort: 5672
+
+              
