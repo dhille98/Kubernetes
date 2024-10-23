@@ -24,7 +24,7 @@ spec:
       - name: dep-con
         image: dhillevajja/dep-dmtest:1.0
         resources:
-          requsets:
+          requests:
             memory: "24MI"
             cpu: 100m
           limits:
