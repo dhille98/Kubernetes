@@ -4,8 +4,9 @@ kind: Deployment
 metadata:
   name: css-demo
   annotations:
-    kubernetes.io/change-cause: "version v1.0"
+    kubernetes.io/change-cause: "version v2.0"
 spec:
+  replicas: 4
   minReadySeconds: 5
   strategy:
     type: RollingUpdate
@@ -15,16 +16,16 @@ spec:
   selector:
     matchLabels:
       app: frontend-app
-      version: "v1.0"
+      version: "v2.0"
   template:
     metadata:
       labels:
         app: frontend-app
-        version: "v1.0"
+        version: "v2.0"
     spec:
       containers:
       - name: dep-con
-        image: dhillevajja/dep-dmtest:1.0
+        image: dhillevajja/dep-dmtest:2.0
         resources:
           requests:
             memory: "24Mi"
@@ -48,3 +49,6 @@ spec:
   - port: 80
     targetPort: 80
     nodePort: 32500
+
+
+
