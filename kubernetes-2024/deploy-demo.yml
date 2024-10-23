@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: css-demo-deployment
+  name: css-demo
 spec:
   minReadySeconds: 5
   strategy:
