@@ -16,12 +16,12 @@ spec:
   selector:
     matchLabels:
       app: frontend-app
-      version: "v2.0"
+      version: "v1.0"
   template:
     metadata:
       labels:
         app: frontend-app
-        version: "v2.0"
+        version: "v1.0"
     spec:
       containers:
       - name: dep-con
