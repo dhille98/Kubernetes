@@ -3,6 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: css-demo
+  annotations:
+    kubernetes.io/change-cause: "version v1.0"
 spec:
   minReadySeconds: 5
   strategy:
@@ -39,10 +41,10 @@ kind: Service
 metadata:
   name: myapp-svc
 spec:
-  type: "LoadBalancer"
+  type: "NodePort"
   selector:
     app: frontend-app
   ports:
   - port: 80
     targetPort: 80
-
+    nodePort: 32500
