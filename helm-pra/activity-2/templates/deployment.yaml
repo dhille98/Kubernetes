@@ -1,0 +1,25 @@
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-dep
+ {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+spec:
+  replicas: {{.Values.replicas}}
+  minReadySeconds: {{.Values.minReadySeconds}}
+  strategy: {{.Values.strategy | toYaml | nindent 4}}
+  selector: {{.Values.selector | toYaml | nindent 4}}
+  template: {{.Values.template | toYaml | nindent 4}}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-con
+        image: {{.Values.image}}:{{.Values.tag}}
+        resources: {{.Values.resources | toYaml | nindent 10}}
+        env: {{.Values.env | toYaml | nindent 10}}
+        ports: {{.Values.ports | toYaml | nindent 10}}
+        livenessProbe: {{.Values.livenessProbe | toYaml | nindent 10}}
+        readinessProbe: {{.Values.readinessProbe | toYaml | nindent 10}}

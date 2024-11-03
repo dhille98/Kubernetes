@@ -1,0 +1,56 @@
+minReadySeconds: 10
+replicas: 2
+selector:
+  matchLabels:
+    app: spc-db
+    version: "1.0"
+template:
+  metadata:
+    labels:
+      app: spc-db
+      version: "1.0"
+containers:
+  image: mysql
+  tag: "8.2" 
+resources:
+  requests:
+    memory: 400Mi
+    cpu: 250m
+  limits:
+    memory: 600Mi
+    cpu: 500m
+ports:
+  - containerPort: 3306
+env:
+  - name: MYSQL_ROOT_PASSWORD
+    value: "root"
+  - name: MYSQL_DATABASE
+    value: "petclinic"
+  - name: MYSQL_USER
+    value: "petclinic"
+  - name: MYSQL_PASSWORD
+    value: "petclinic"
+volumeMounts:
+  - name: sql-vol
+    mountPath: /var/lib/sql
+volumeClaimTemplates:
+  - metadata:
+      name: sql-vol
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: managed
+      resources:
+        requests:
+          storage: 1Gi
+## mysql service
+metadata: 
+  name: myapp-svc
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: spc-db
+  ports:
+  - port: 3306
+    targetPort: 3306

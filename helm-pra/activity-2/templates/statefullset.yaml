@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Service
+metadata: {{.Values.metadata | toYaml | nindent 2}}
+spec: {{.Values.spec | toYaml | nindent 2 }}
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-sts
+spec:
+  minReadySeconds: {{ .Values.minReadySeconds }}
+  replicas: {{ .Values.replicas}}
+  selector: {{ .Values.selector | toYaml | nindent 4 }}
+  serviceName: {{ .Values.metadata.name }}
+  template: {{.Values.template | toYaml | nindent 4}}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-con
+        image: {{ .Values.containers.image}}:{{ .Values.containers.tag }}
+        resources: {{ .Values.resources | toYaml | nindent 8 }}
+        ports: {{.Values.ports | toYaml | nindent 10 }}
+        env: {{ .Values.env | toYaml | nindent 10 }}
+        volumeMounts: {{.Values.volumeMounts | toYaml | nindent 10 }}
+  volumeClaimTemplates: {{ .Values.volumeClaimTemplates | toYaml | nindent 4}}
+

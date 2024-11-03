@@ -1,0 +1,5 @@
+secrets:
+  saPassword: "India@123456"
+config:
+  databaseUrl: "jdbc:mysql://{{ .Release.Name }}-sts-0.myapp-spc:3306/petclinic"
+  databasePort: "3306"

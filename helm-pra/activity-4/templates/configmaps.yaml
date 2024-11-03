@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+  labels:
+    app: {{ .Chart.Name }}
+data:
+  # You can add configuration data here
+  app.properties: |
+    database.url={{ .Values.config.databaseUrl }}
+    database.port={{ .Values.config.databasePort }}
