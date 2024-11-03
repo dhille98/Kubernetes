@@ -1,0 +1,17 @@
+replicas: 4
+selectors: 
+  matchlables: 
+    app: nginx 
+    version: "1.0"
+containers:
+  image: nginx
+  tag: "1.27"
+  ports: 
+    containerport: "80"
+resources:
+  limits:
+    memory: "64Mi"
+    cpu: "100m"
+  requests: 
+    memory: "128Mi"
+    cpu: "200m"
