@@ -12,8 +12,10 @@ spec:
   replicas: {{.Values.replicas}}
   minReadySeconds: {{.Values.minReadySeconds}}
   strategy: {{.Values.strategy | toYaml | nindent 4}}
-  selector: {{.Values.selector | toYaml | nindent 4}}
-  template: {{.Values.template | toYaml | nindent 4}}
+  selector: 
+    matchLables: {{ .Values.selectors | toYaml | nindent 6}}
+  template: 
+    metadata: {{ .Values.metadata | toYaml | nindent 6}}
     spec:
       containers:
       - name: {{ .Release.Name }}-con

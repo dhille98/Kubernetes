@@ -4,11 +4,10 @@ selector:
   matchLabels:
     app: spc-db
     version: "1.0"
-template:
-  metadata:
-    labels:
-      app: spc-db
-      version: "1.0"
+metadata:
+  labels:
+    app: spc-db
+    version: "1.0"
 containers:
   image: mysql
   tag: "8.2" 
@@ -44,8 +43,6 @@ volumeClaimTemplates:
         requests:
           storage: 1Gi
 ## mysql service
-metadata: 
-  name: myapp-svc
 spec:
   type: ClusterIP
   clusterIP: None

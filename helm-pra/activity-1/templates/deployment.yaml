@@ -5,13 +5,10 @@ metadata:
   name: {{ .Release.Name }}-deploy
 spec:
   replicas: {{ .Values.replicas}}
-  selector: {{ .Values.selectors | toYaml | nindent 4 }}
+  selector: 
+    matchLabels: {{ .Values.selectors | toYaml | nindent 6}}
   template:
-    metadata:
-      labels:
-        app: {{.Values.selectors.matchlables.app}}
-        version: {{.Values.selectors.matchlables.version }}
-    
+    metadata: {{ .Values.metadata | toYaml | nindent 6}}
     spec:
       containers:
       - name: {{ .Release.Name }}-con

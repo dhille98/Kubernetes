@@ -1,7 +1,10 @@
 replicas: 4
-selectors: 
-  matchlables: 
-    app: nginx 
+selectors:  
+  app: "nginx"
+  version: "1.0"
+metadata:
+  labels:
+    app: "nginx"
     version: "1.0"
 containers:
   image: nginx
@@ -10,8 +13,8 @@ containers:
     containerport: "80"
 resources:
   limits:
-    memory: "64Mi"
-    cpu: "100m"
-  requests: 
     memory: "128Mi"
     cpu: "200m"
+  requests: 
+    memory: "64Mi"
+    cpu: "100m"

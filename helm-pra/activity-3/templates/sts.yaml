@@ -6,9 +6,11 @@ metadata:
 spec:
   minReadySeconds: {{ .Values.minReadySeconds }}
   replicas: {{ .Values.replicas}}
-  selector: {{ .Values.selector | toYaml | nindent 4 }}
+  selector: 
+    matchLables: {{ .Values.selector | toYaml | nindent 6 }}
   serviceName: {{ .Values.metadata.name }}
-  template: {{.Values.template | toYaml | nindent 4}}
+  template: 
+    metadata: {{.Values.metadata | toYaml | nindent 6 }}
     spec:
       containers:
       - name: {{ .Release.Name }}-con
