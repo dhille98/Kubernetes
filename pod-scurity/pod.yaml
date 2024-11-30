@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubesec-demo
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/kubesec-demo: "localhost/kubesec-demo-profile"
+    container.seccomp.security.alpha.kubernetes.io/kubesec-demo: "runtime/default"
+spec:
+  automountServiceAccountToken: false
+  serviceAccountName: my-service-account
+  containers:
+    - name: kubesec-demo
+      image: gcr.io/google-samples/node-hello:1.0
+      securityContext:
+        privileged: false
+        runAsUser: 1001   # Non-root user ID
+        runAsNonRoot: true # Ensure running as non-root user
+        readOnlyRootFilesystem: true # Immutable root filesystem
+        capabilities:
+          drop:
+            - ALL # Drop all capabilities initially 
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
